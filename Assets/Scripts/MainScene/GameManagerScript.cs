@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
+
+    public static float score;
     
     void Start()
     {
-        
+        score = 0;
     }
 
-
-    void Update()
+    public void GameOver()
     {
-        
+        gameObject.GetComponent<SceneLoadScript>().ToGameOverScene();
     }
 }

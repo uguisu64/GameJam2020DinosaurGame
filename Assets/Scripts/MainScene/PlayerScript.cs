@@ -11,6 +11,9 @@ public class PlayerScript : MonoBehaviour
     private int color;
 
     private float differTime;
+
+    public GameObject gameManager;
+
     void Start()
     {
         rigit2d = gameObject.GetComponent<Rigidbody2D>();
@@ -71,7 +74,7 @@ public class PlayerScript : MonoBehaviour
                 //GameOver
                 if (differTime >= 0.2f)
                 {
-
+                    gameManager.GetComponent<GameManagerScript>().GameOver();
                 }
             }
         }
