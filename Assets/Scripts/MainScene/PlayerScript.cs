@@ -55,6 +55,10 @@ public class PlayerScript : MonoBehaviour
         {
             canJump = true;
         }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            gameManager.GetComponent<GameManagerScript>().GameOver();
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -72,7 +76,7 @@ public class PlayerScript : MonoBehaviour
                 differTime += Time.deltaTime;
 
                 //GameOver
-                if (differTime >= 0.2f)
+                if (differTime >= 0.4f)
                 {
                     gameManager.GetComponent<GameManagerScript>().GameOver();
                 }

@@ -11,18 +11,25 @@ public class GroundsScript : MonoBehaviour
     private float createPos;
 
     public GameObject ground;
+    public GameObject gameManager;
 
     private List<GameObject> grounds = new List<GameObject>();
+
+    public GameObject[] enemies;
+
     void Start()
     {
         differ = 0;
-        speed = 2;
+        speed = 3;
         createPos = 0;
 
-        for(int i = 0; i < 3; i++)
-        {
-            MakeNewGround();
-        }
+        //初期床生成
+        MakeNewGround(0);
+        MakeNewGround(Random.Range(0, 3));
+        MakeNewGround(Random.Range(0, 3));
+
+        //敵生成開始
+        StartCoroutine(MakeEnemy());
     }
 
     
@@ -30,23 +37,24 @@ public class GroundsScript : MonoBehaviour
     {
         gameObject.transform.position -= Vector3.right * speed * Time.deltaTime;
         differ += speed * Time.deltaTime;
+        gameManager.GetComponent<GameManagerScript>().ScoreUp(speed * Time.deltaTime);
 
-        if (differ >= 12)
+        if (differ >= 12.8f)
         {
             differ = 0;
-            MakeNewGround();
+            MakeNewGround(Random.Range(0, 3));
         }
     }
 
-    public void MakeNewGround()
+    public void MakeNewGround(int i)
     {
         GameObject newGround = Instantiate(ground);
-        newGround.GetComponent<GroundScript>().SetColor(Random.Range(0, 3));
+        newGround.GetComponent<GroundScript>().SetColor(i);
         newGround.transform.parent = transform;
         newGround.transform.localPosition = new Vector3(createPos, 0, 0);
         grounds.Add(newGround);
 
-        if (grounds.Count > 4)
+        if (grounds.Count > 5)
         {
             GameObject a = grounds[0];
             grounds.RemoveAt(0);
@@ -54,5 +62,21 @@ public class GroundsScript : MonoBehaviour
         }
 
         createPos += 12.8f;
+    }
+
+    public void SpeedUp()
+    {
+        speed += 0.5f;
+    }
+
+    public IEnumerator MakeEnemy()
+    {
+        while (true)
+        {
+            GameObject enemy = Instantiate(enemies[Random.Range(0, 3)]);
+            enemy.transform.parent = transform;
+
+            yield return new WaitForSeconds(Random.Range(3.5f, 6.5f));
+        }
     }
 }
