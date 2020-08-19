@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GroundsScript : MonoBehaviour
@@ -12,8 +13,6 @@ public class GroundsScript : MonoBehaviour
 
     public GameObject ground;
     public GameObject gameManager;
-
-    private List<GameObject> grounds = new List<GameObject>();
 
     public GameObject[] enemies;
 
@@ -52,14 +51,6 @@ public class GroundsScript : MonoBehaviour
         newGround.GetComponent<GroundScript>().SetColor(i);
         newGround.transform.parent = transform;
         newGround.transform.localPosition = new Vector3(createPos, 0, 0);
-        grounds.Add(newGround);
-
-        if (grounds.Count > 5)
-        {
-            GameObject a = grounds[0];
-            grounds.RemoveAt(0);
-            Destroy(a);
-        }
 
         createPos += 12.8f;
     }
@@ -67,16 +58,17 @@ public class GroundsScript : MonoBehaviour
     public void SpeedUp()
     {
         speed += 0.5f;
+        Debug.Log(speed);
     }
 
     public IEnumerator MakeEnemy()
     {
         while (true)
         {
-            GameObject enemy = Instantiate(enemies[Random.Range(0, 3)]);
+            GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Count())]);
             enemy.transform.parent = transform;
 
-            yield return new WaitForSeconds(Random.Range(3.5f, 6.5f));
+            yield return new WaitForSeconds(Random.Range(10.0f / speed, 15.0f / speed));
         }
     }
 }

@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
                 differTime += Time.deltaTime;
 
                 //GameOver
-                if (differTime >= 0.4f)
+                if (differTime >= 0.8f)
                 {
                     gameManager.GetComponent<GameManagerScript>().GameOver();
                 }

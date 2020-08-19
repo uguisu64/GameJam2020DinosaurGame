@@ -14,6 +14,8 @@ public class GameManagerScript : MonoBehaviour
     void Start()
     {
         score = 0;
+
+        StartCoroutine(SpeedUp());
     }
 
     public void GameOver()
@@ -23,9 +25,12 @@ public class GameManagerScript : MonoBehaviour
 
     public IEnumerator SpeedUp()
     {
-        yield return new WaitForSeconds(5);
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
 
-        grounds.GetComponent<GroundsScript>().SpeedUp();
+            grounds.GetComponent<GroundsScript>().SpeedUp();
+        }
     }
 
     public void ScoreUp(float i)

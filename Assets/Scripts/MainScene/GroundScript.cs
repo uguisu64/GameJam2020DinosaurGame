@@ -6,6 +6,14 @@ public class GroundScript : MonoBehaviour
 {
     private int color;
 
+    private void Update()
+    {
+        if (transform.position.x <= -16)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SetColor(int c)
     {
         color = c;
